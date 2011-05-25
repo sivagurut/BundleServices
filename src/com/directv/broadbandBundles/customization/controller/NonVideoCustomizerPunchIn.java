@@ -1,0 +1,87 @@
+package com.directv.broadbandBundles.customization.controller;
+
+import com.directv.broadbandBundles.customization.logger.SensitiveDataLogger;
+import com.directv.broadbandBundles.customization.translator.XmlToModelCustomizations;
+import com.directv.broadbandBundles.initialize.CustomizerProperites;
+import com.directv.broadbandBundles.ui.model.input.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLDecoder;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 3/25/11
+ * Time: 4:28 PM
+ * Broadband Bundle Punch-in Servlet - i.e. starting point for Edge Systems to fire-up the NVC
+ */
+public class NonVideoCustomizerPunchIn extends HttpServlet
+{
+
+    private final Log logger = LogFactory.getLog(getClass());
+
+    public static final String CUSTOMIZATION_PARAM_NAME = "xmlCustomizationInput";
+
+
+    public void service(HttpServletRequest request,
+                        HttpServletResponse response)
+            throws ServletException, IOException
+    {
+
+        //input to UI
+        CustomizationModel model;
+
+        //Customizations from Edge System
+        String xmlCustomizationInput = request.getParameter(CUSTOMIZATION_PARAM_NAME);
+
+        try
+        {
+            if (xmlCustomizationInput == null)
+            {
+                throw new Exception ("Expecting input parameter <" + CUSTOMIZATION_PARAM_NAME + "> but not found");
+            }
+
+            //UTF-8 encoded - so decode
+            xmlCustomizationInput = URLDecoder.decode(xmlCustomizationInput, NonVideoCustomizerPunchOut.CHARACTER_SET);
+
+            //don't log unless masking sensitive data
+            //the following is just so we can log the request while masking sensitive data
+            SensitiveDataLogger.logXmlSensitiveData(xmlCustomizationInput);
+
+            //parse XML and translate into model used by UI Renderer
+            model = XmlToModelCustomizations.getModelFromXml(xmlCustomizationInput);
+
+            //Save input model in session for use by renderer
+            //true is set because we will create a session if one does not exist
+            request.getSession(true).setAttribute(CUSTOMIZATION_PARAM_NAME, model);
+
+            //Send initial page loader to browser
+            //This will load EXT-JS in the browser, then the initial script will make an AJAX call back to the NVC
+            //to get the initial set of questions to display
+            ServletOutputStream out = response.getOutputStream();
+            out.println(CustomizerProperites.getProperty(CustomizerProperites.HTML_PREFIX));
+            out.flush();
+        }
+        catch (Exception e)
+        {
+            logger.fatal("Failed to parse xml Customization Input.", e);
+            StackTraceElement[] steArray = e.getStackTrace();
+            if (steArray != null)
+            {
+                for (StackTraceElement ste : steArray)
+                {
+                    logger.fatal("at " + ste.toString());
+                }
+            }
+
+            //@todo redirect to error page
+        }
+    }
+}

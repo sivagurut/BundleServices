@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wls:weblogic-web-app xmlns:wls="http://www.bea.com/ns/weblogic/90" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/920/weblogic-web-app.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <wls:jsp-descriptor>
+        <wls:keepgenerated>true</wls:keepgenerated>
+        <wls:working-dir>D:\OTHERS\NVC_APP\NVC_WORKSPACE\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\nvc_domain\work\BundlesNVC</wls:working-dir>
+        <wls:debug>true</wls:debug>
+    </wls:jsp-descriptor>
+    <wls:context-root>BundlesNVC</wls:context-root>
+    <wls:weblogic-version>9.2</wls:weblogic-version>
+</wls:weblogic-web-app>

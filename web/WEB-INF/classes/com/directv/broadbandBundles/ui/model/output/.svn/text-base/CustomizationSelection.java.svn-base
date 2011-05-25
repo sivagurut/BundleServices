@@ -1,0 +1,72 @@
+package com.directv.broadbandBundles.ui.model.output;
+
+import com.directv.broadbandBundles.ui.model.output.CustomizationSelectionItem;
+
+import java.util.ArrayList;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 4/19/11
+ * Time: 11:41 AM
+ * To change this template use File | Settings | File Templates.
+ */
+public class CustomizationSelection
+{
+    private long visitId;
+    private boolean immediateSubmission;
+    private ArrayList<CustomizationSelectionItem> items;
+    private String punchOutURL;
+
+
+    public long getVisitId()
+    {
+        return visitId;
+    }
+
+    public String getPunchOutURL()
+    {
+        return punchOutURL;
+    }
+
+    public void setPunchOutURL(String punchOutURL)
+    {
+        this.punchOutURL = punchOutURL;
+    }
+
+    public void setVisitId(long visitId)
+    {
+        this.visitId = visitId;
+    }
+
+    public boolean isImmediateSubmission()
+    {
+        return immediateSubmission;
+    }
+
+    public void setImmediateSubmission(boolean immediateSubmission)
+    {
+        this.immediateSubmission = immediateSubmission;
+    }
+
+    public ArrayList<CustomizationSelectionItem> getItems()
+    {
+        return items;
+    }
+
+    public void setItems(ArrayList<CustomizationSelectionItem> items)
+    {
+        this.items = items;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "CustomizationSelection{" +
+                "visitId=" + visitId +
+                ", immediateSubmission=" + immediateSubmission +
+                ", items=" + items +
+                ", punchOutURL='" + punchOutURL + '\'' +
+                '}';
+    }
+}

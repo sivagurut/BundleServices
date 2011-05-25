@@ -1,0 +1,23 @@
+package com.directv.broadbandBundles.ui.view.form.fields;
+
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 5/9/11
+ * Time: 2:41 PM
+ * Creates an EXT-JS Radio Group
+ */
+public class RadioGroupField extends CheckBoxGroupField
+{
+    public String getGroupType()
+    {
+        return "radiogroup";
+    }
+
+    public String getItemType()
+    {
+        return "linkradio";
+    }
+
+}

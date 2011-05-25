@@ -1,0 +1,67 @@
+package com.directv.broadbandBundles.customization.translator;
+
+
+import com.directv.broadbandBundles.ui.model.output.CustomizationSelection;
+import com.directv.broadbandBundles.ui.model.output.CustomizationSelectionItem;
+import com.directv.ei.schemas.wsdl.nonvideoservices.v3_0.processnonvideocustomizations.NonVideoSelectionEntity;
+import com.directv.ei.schemas.wsdl.nonvideoservices.v3_0.processnonvideocustomizations.ProcessNonVideoCustomizationsRequestEntity;
+import com.directv.ei.schemas.wsdl.nonvideoservices.v3_0.processnonvideocustomizations.SelectionList;
+
+import java.util.HashSet;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 4/8/11
+ * Time: 11:08 AM
+ * Translate a Bridgevine customization into the model used to build a form on the front end
+ */
+public class ModelToRequestCustomizations
+{
+    //private static final Log logger = LogFactory.getLog("com.directv.broadbandBundles.customization.translator.RequestCustomizations");
+
+    public static ProcessNonVideoCustomizationsRequestEntity getRequestFromModel(CustomizationSelection model,
+                                                                                 HashSet<String> sensitiveIds) throws Exception
+    {
+        ProcessNonVideoCustomizationsRequestEntity request = new ProcessNonVideoCustomizationsRequestEntity();
+        //set Visit ID
+        request.setVisitId(model.getVisitId());
+
+        //set selections
+        SelectionList list = new SelectionList();
+        request.setSelectionList(list);
+
+        //set Immediate Submission
+        list.setImmediateSubmissionFlag(model.isImmediateSubmission());
+
+        //make sure we have at least one selection to send to Bridgevine
+        if (model.getItems() != null && model.getItems().size() > 0)
+        {
+            //     ArrayList<NonVideoSelectionEntity> items = new ArrayList<NonVideoSelectionEntity>();
+            NonVideoSelectionEntity[] items = new NonVideoSelectionEntity[model.getItems().size()];
+            int i = 0;
+
+            //add individual selections
+            for (CustomizationSelectionItem item : model.getItems())
+            {
+                NonVideoSelectionEntity selection = new NonVideoSelectionEntity();
+                selection.setCustomizationId(item.getCustomizationId());
+                if (sensitiveIds.contains(item.getCustomizationId()))
+                {
+                    selection.setSensitiveValue(item.getValue());
+                }
+                else
+                {
+                    selection.setValue(item.getValue());
+                }
+
+                items[i] = selection;
+                i++;
+            }
+
+            list.setSelection(items);
+        }
+        return request;
+    }
+
+}

@@ -1,0 +1,366 @@
+package com.directv.broadbandBundles.customization.service.handler;
+
+import javax.xml.rpc.handler.GenericHandler;
+import javax.xml.rpc.handler.HandlerInfo;
+import javax.xml.rpc.handler.MessageContext;
+import javax.xml.rpc.handler.soap.SOAPMessageContext;
+import javax.xml.soap.*;
+import javax.xml.namespace.QName;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Hashtable;
+
+//import com.directv.ei.schemas.envelope.v30.EnvelopeDocument;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.xmlbeans.XmlException;
+import org.w3c.dom.*;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 5/3/11
+ * Time: 3:55 PM
+ * logs the Customization SOAP requests and responses
+ */
+public class CustomizationsSoapHandler extends GenericHandler
+{
+    private final Log logger = LogFactory.getLog(getClass());
+
+    private HandlerInfo handlerInfo;
+
+    public void init(HandlerInfo hi)
+    {
+        handlerInfo = hi;
+    }
+
+    public boolean handleRequest(MessageContext context)
+    {
+        try
+        {
+            SOAPMessageContext messageContext = (SOAPMessageContext) context;
+            SOAPMessage soapMessage = messageContext.getMessage();
+
+            //log the request
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            soapMessage.writeTo(baos);
+            logger.info("*** Customization Request SOAP Message (Masked): " + baos.toString());
+
+//            SOAPBody sb = soapMessage.getSOAPBody();
+//            DOMSource source = new DOMSource(sb.extractContentAsDocument());
+//            logger.debug("dom=" +source.toString());
+
+//            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+//            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+//            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+//            OutputStream out = new ByteArrayOutputStream();
+//            StreamResult streamResult = new StreamResult();
+//            streamResult.setOutputStream(out);
+//            transformer.transform(source, streamResult);
+//            logger.debug("dom=" + streamResult.getOutputStream().toString());
+
+
+            //log request, but mask sensitive data first
+            //copy soap body
+//            org.w3c.dom.Node copy = soapMessage.getSOAPBody().cloneNode(true);
+//            //search through nodes for sensitiveTextValue
+//            NodeList list = copy.getChildNodes();
+//            for (int i = 0; i < list.getLength(); i++)
+//            {
+//                if (list.item(i) != null)
+//                {
+//                    if (list.item(i).getNodeName()
+//                    if (list)
+//                    nodeList.item(i).getNodeValue();
+//                }
+//                logger.debug(nodeList.item(i).getLocalName()
+//
+//                + ":" + nodeList.item(i).getTextContent());
+//
+//            }
+//
+//            Iterator nodes
+//
+//            if (logValue.length() > 8)
+//            {
+//                //long enough to mask all but last 4
+//                logValue = new StringMasker(0, logValue.length() - 5).mask(logValue);
+//            }
+//            else
+//            {
+//                //short value, mask the whole thing
+//                logValue = new StringMasker().mask( logValue );
+//            }
+
+
+//            SOAPHeader soapHeader = soapMessage.getSOAPHeader();
+//
+//            if (soapHeader != null) {
+//
+//                //Extract all Soap Headers
+//
+//                Iterator iterator = soapHeader.extractAllHeaderElements();
+//
+//                if (iterator.hasNext()) {
+//
+//                    SOAPHeaderElement he = (SOAPHeaderElement)
+//
+//                    iterator.next();
+//
+//                    logger.debug("handleRequest");
+//
+//                    logger.debug("SOAP Headers");
+//
+//                    NodeList list = he.getChildNodes();
+//
+//                    //Extract Child Nodes userid and tokenId for AuthToken element
+//
+//                    for (int i = 0; i < list.getLength(); i++) {
+//
+//                        logger.debug(list.item(i).getLocalName()
+//
+//                        + ":" + list.item(i).getTextContent());
+//
+//                    }
+//                }
+//
+//            }
+
+//            //Mask SSN and Authentication password before logging
+//            String ssnOriginal = null;
+//            String authenticaionPasswordOriginal = null;
+//
+//            //SSN / Tax ID
+//            NodeList ssnNodes = soapMessage.getSOAPBody().getElementsByTagName("int:TaxID");
+//            if (ssnNodes != null && ssnNodes.item(0) != null && ssnNodes.item(0).getFirstChild() != null &&
+//                    ssnNodes.item(0).getFirstChild().getNodeValue() != null)
+//            {
+//                //Save original SSN/Tax ID
+//                ssnOriginal = ssnNodes.item(0).getFirstChild().getNodeValue();
+//                //Mask SSN - for logging ]
+//                if (ssnOriginal.length() > 6)
+//                {
+//                    ssnNodes.item(0).getFirstChild().setNodeValue("*****" + ssnOriginal.substring(5));
+//                }
+//                else
+//                {
+//                    ssnNodes.item(0).getFirstChild().setNodeValue("*****");
+//                }
+//            }
+//            //Password
+//            NodeList password = soapMessage.getSOAPBody().getElementsByTagName("int:Password");
+//            if (password != null && password.item(0) != null && password.item(0).getFirstChild() != null &&
+//                    password.item(0).getFirstChild().getNodeValue() != null)
+//            {
+//                authenticaionPasswordOriginal = password.item(0).getFirstChild().getNodeValue();
+//                password.item(0).getFirstChild().setNodeValue("********");
+//            }
+
+//            //put the original values back in for transmission
+//            if (ssnOriginal != null)
+//            {
+//                ssnNodes.item(0).getFirstChild().setNodeValue(ssnOriginal);
+//            }
+//            //and  password
+//            if (authenticaionPasswordOriginal != null)
+//            {
+//                password.item(0).getFirstChild().setNodeValue(authenticaionPasswordOriginal);
+//            }
+
+        }
+        catch (Exception e)
+        {
+            logger.fatal("Exception while logging Customization Request SOAP Message: " + e);
+            StackTraceElement[] steArray = e.getStackTrace();
+            if (steArray != null)
+            {
+                for (StackTraceElement ste : steArray)
+                {
+                    logger.fatal("at " + ste.toString());
+                }
+            }
+
+
+        }
+
+        return true;
+    }
+
+
+    public boolean handleResponse(MessageContext context)
+    {
+        try
+        {
+            SOAPMessageContext messageContext = (SOAPMessageContext) context;
+            SOAPMessage soapMessage = messageContext.getMessage();
+
+            //log exactly what we got from EI.
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            soapMessage.writeTo(baos);
+            logger.info("EI Customization Response SOAP Message (Masked): " + baos.toString());
+
+            //used to store EI messages that need to move to the response
+            Hashtable<String, String> msg = new Hashtable<String, String>();
+
+            SOAPHeader header = soapMessage.getSOAPHeader();
+
+            //EI puts application messages in the SOAP Header, yes I know, so move the messages
+            //to the body response, like they should have
+            //@todo allow for multiple messages
+            //look for result nodelists, this is where EI puts the messages
+            //Look in detail because always get a result
+            NodeList detailNodes = header.getElementsByTagName("tns:detail");
+
+            if (detailNodes != null && detailNodes.getLength() > 0)
+            {
+                //details provided so not a success
+                NodeList resultList = header.getElementsByTagName("tns:result");
+                if (resultList != null)
+                {
+                    //save node names and values
+//                    logger.debug("resultList.getLength(): " + resultList.getLength());
+                    for (int i = 0; i < resultList.getLength(); i++)
+                    {
+                        if (resultList.item(i).getChildNodes() != null)
+                        {
+                            NodeList y = resultList.item(i).getChildNodes();
+//                            logger.debug("resultList child nodes: " + y.getLength());
+                            for (int j = 0; j < y.getLength(); j++)
+                            {
+//                                logger.debug("resultList getLocalName=" + y.item(j).getLocalName() + ":  getTextContent=" + y.item(j).getTextContent());
+                                if (y.item(j).getLocalName() != null && y.item(j).getTextContent() != null)
+                                {
+                                    msg.put(y.item(j).getLocalName(), y.item(j).getTextContent());
+                                }
+                            }
+                        }
+                    }
+
+//                    logger.debug("detailNodes.getLength(): " + detailNodes.getLength());
+
+                    for (int i = 0; i < detailNodes.getLength(); i++)
+                    {
+                        if (detailNodes.item(i).getChildNodes() != null)
+                        {
+                            NodeList y = detailNodes.item(i).getChildNodes();
+//                            logger.debug("tns:detail child nodes: " + y.getLength());
+                            for (int j = 0; j < y.getLength(); j++)
+                            {
+//                                logger.debug("tns:detail getLocalName=" + y.item(j).getLocalName() + ":  getTextContent=" + y.item(j).getTextContent());
+                                if (y.item(j).getLocalName() != null && y.item(j).getTextContent() != null)
+                                {
+                                    msg.put(y.item(j).getLocalName(), y.item(j).getTextContent());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            SOAPBody body = soapMessage.getSOAPBody();
+            if (body == null)
+            {
+//                logger.debug("body is empty");
+            }
+            {
+//                logger.debug("have a body");
+                //If there were any EI messages, move them to the Response
+                if (msg.size() > 0)
+                {
+                    //do we have a response?
+                    NodeList responseList = body.getElementsByTagName("response");
+                    if (responseList != null && responseList.getLength() > 0)
+                    {
+//                        logger.debug("have a response");
+                        //do we have a message List?
+                        NodeList messageList = body.getElementsByTagName("ent:messageList");
+                        if (messageList != null  && messageList.getLength() > 0)
+                        {
+//                               logger.debug("have a message list");
+                        }
+                        else
+                        {
+//                            logger.debug("do not have a message list");
+                            SOAPElement r = (SOAPElement) responseList.item(0);
+                            addMessageList(msg, r);
+                        }
+                    }
+                    else
+                    {
+//                        logger.debug("no response");
+                        SOAPElement r = soapMessage.getSOAPBody().addBodyElement(new QName("http://ei.directv.com/schemas/wsdl/nonVideoServices/v3_0/processNonVideoCustomizations", "response", "svc"));
+                        addMessageList(msg, r);
+                    }
+
+                    baos = new ByteArrayOutputStream();
+                    soapMessage.writeTo(baos);
+                    logger.info("Modified Customization Response SOAP Message (Masked): " + baos.toString());
+
+                }
+            }
+
+
+//                    //put the original Equifax XML back in for processing
+//                    if (embedded != null && embedded.getLength() > 0 && embedded.item(0).getFirstChild() != null)
+//                    {
+//                        embedded.item(0).getFirstChild().setNodeValue(embeddedEquifaxOriginal);
+//                    }
+//                    //put the original Experian XML back in for processing
+//                    if (embedded != null && embedded.getLength() > 1 && embedded.item(1).getFirstChild() != null)
+//                    {
+//                        embedded.item(1).getFirstChild().setNodeValue(embeddedExperianOrginal);
+//                    }
+//            }
+
+        }
+        catch (Exception e)
+        {
+            logger.fatal("Exception logging Customization Response SOAP Message: " + e);
+            StackTraceElement[] steArray = e.getStackTrace();
+            if (steArray != null)
+            {
+                for (StackTraceElement ste : steArray)
+                {
+                    logger.fatal("at " + ste.toString());
+                }
+            }
+        }
+        return true;
+    }
+
+    private void addMessageList(Hashtable<String, String> msg, SOAPElement r) throws SOAPException
+    {
+        SOAPElement ml = r.addChildElement(new QName("http://ei.directv.com/schemas/entities/v3_1", "messageList", "ent"));
+        SOAPElement m = ml.addChildElement("message", "ent");
+        SOAPElement ms = m.addChildElement("messageStatus", "ent");
+        ms.addTextNode(msg.get("status"));
+        SOAPElement p = m.addChildElement("provider", "ent");
+        p.addTextNode(msg.get("provider"));
+        SOAPElement md = m.addChildElement("messageDetail", "ent");
+        SOAPElement mc = md.addChildElement("messageCode", "ent");
+        mc.addTextNode(msg.get("code"));
+        SOAPElement mt = md.addChildElement("messageText", "ent");
+        mt.addTextNode(msg.get("text"));
+        SOAPElement msy = md.addChildElement("messageSeverity", "ent");
+        msy.addTextNode(msg.get("severity"));
+        SOAPElement mcy = md.addChildElement("messageCategory", "ent");
+        mcy.addTextNode(msg.get("category"));
+        SOAPElement ai = md.addChildElement("additionalInformation", "ent");
+        ai.addTextNode(msg.get("additionalInformation"));
+
+    }
+
+    public boolean handleFault(MessageContext context)
+    {
+        return handleResponse(context);
+    }
+
+    public QName[] getHeaders()
+    {
+        return handlerInfo.getHeaders();
+    }
+
+
+}
+

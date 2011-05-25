@@ -1,0 +1,52 @@
+8
+
+dir
+176
+svn://147.22.180.158/broadband_customizer/trunk/src/com/directv/broadbandBundles/ui/view/form/groups
+svn://147.22.180.158/broadband_customizer
+
+
+
+2011-05-13T15:45:46.153339Z
+161
+jtyprowicz
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+5706b04f-5310-b44f-a216-769feb61f2de
+
+BoxGroupItem.java
+file
+
+
+
+
+2011-05-19T20:25:12.689130Z
+2a052c58bdbdbd756557119b153bcfce
+2011-05-13T15:45:46.153339Z
+161
+jtyprowicz
+
+BoxGroup.java
+file
+
+
+
+
+2011-05-19T20:25:12.689130Z
+b550bd479d7303a77f9cf201bdef1677
+2011-05-13T15:45:46.153339Z
+161
+jtyprowicz
+

@@ -1,0 +1,57 @@
+package com.directv.broadbandBundles.ui.model.output;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 4/19/11
+ * Time: 11:43 AM
+ * User data that needs to get back to Bridgevine
+ */
+public class CustomizationSelectionItem
+{
+    private String customizationId;
+    private String value;
+    //does not go to bridgevine, but EI needs to know so it does not log this element
+    private boolean sensitiveData;
+
+
+    public boolean isSensitiveData()
+    {
+        return sensitiveData;
+    }
+
+    public void setSensitiveData(boolean sensitiveData)
+    {
+        this.sensitiveData = sensitiveData;
+    }
+
+    public String getCustomizationId()
+    {
+        return customizationId;
+    }
+
+    public void setCustomizationId(String customizationId)
+    {
+        this.customizationId = customizationId;
+    }
+
+    public String getValue()
+    {
+        return value;
+    }
+
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "CustomizationSelectionItem{" +
+                "customizationId='" + customizationId + '\'' +
+                ", value='" + value + '\'' +
+                ", sensitiveData=" + sensitiveData +
+                '}';
+    }
+}

@@ -1,0 +1,52 @@
+8
+
+dir
+176
+svn://147.22.180.158/broadband_customizer/trunk/src/com/directv/broadbandBundles/ui/model/output
+svn://147.22.180.158/broadband_customizer
+
+
+
+2011-05-04T18:55:57.692708Z
+122
+jtyprowicz
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+5706b04f-5310-b44f-a216-769feb61f2de
+
+CustomizationSelectionItem.java
+file
+
+
+
+
+2011-05-19T18:51:46.328501Z
+778eb9c7cc98d10e293e68e676de114b
+2011-05-04T18:55:57.692708Z
+122
+jtyprowicz
+
+CustomizationSelection.java
+file
+
+
+
+
+2011-05-19T18:51:46.328501Z
+64be515c7f8db1436ea48f04b000f9a1
+2011-05-04T18:55:57.692708Z
+122
+jtyprowicz
+

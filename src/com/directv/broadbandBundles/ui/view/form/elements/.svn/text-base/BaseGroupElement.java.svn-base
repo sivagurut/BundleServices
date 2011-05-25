@@ -1,0 +1,81 @@
+package com.directv.broadbandBundles.ui.view.form.elements;
+
+import com.directv.broadbandBundles.ui.model.input.Customization;
+import com.directv.broadbandBundles.ui.model.input.CustomizationItem;
+import com.directv.broadbandBundles.ui.view.form.fields.CheckBoxGroupField;
+import com.directv.broadbandBundles.ui.view.form.fields.LabelField;
+import com.directv.broadbandBundles.ui.view.form.groups.BoxGroup;
+import com.directv.broadbandBundles.ui.view.form.groups.BoxGroupItem;
+
+import java.util.ArrayList;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 5/9/11
+ * Time: 4:22 PM
+ * Adds all the group elements to a group type (checkbox or radio group)
+ */
+public abstract class BaseGroupElement extends BaseElement implements GenericGroupElement
+{
+    public void addGroupElementToForm(Customization customization,
+                                      StringBuffer b,
+                                      boolean firstFieldSetItem) throws Exception
+    {
+        BoxGroup group = new BoxGroup();
+
+        //do we have inline help to display?
+        if (customization.getHelpType() != null &&
+                customization.getHelpType().equals("InlineHTML") &&
+                customization.getHelpText() != null)
+        {
+
+            if (customization.getName() != null)
+            {
+                //add label, always provided
+                new LabelField().setOptions(b, getCustomizationName(customization), LabelField.LABEL_STYLE_LABEL, firstFieldSetItem);
+                firstFieldSetItem = false;
+            }
+            group.setLabel(escapeQuote(stripTags(customization.getHelpText())));
+            group.setLabelStyle(LabelField.LABEL_STYLE_HELP);
+        }
+        else
+        {
+            group.setLabel(getCustomizationName(customization));
+            group.setLabelStyle(LabelField.LABEL_STYLE_LABEL);
+        }
+        group.setAllowBlank(!customization.isRequired());
+
+        ArrayList<BoxGroupItem> items = new ArrayList<BoxGroupItem>();
+        for (CustomizationItem cItem : customization.getItem())
+        {
+            BoxGroupItem groupItem = new BoxGroupItem();
+            groupItem.setBoxLabel(stripTags(cItem.getText()));
+            groupItem.setChecked(cItem.isSelected());
+            groupItem.setHtmlText(getCustomizationPrice(cItem));
+            if (cItem.getHelpText() != null)
+            {
+                groupItem.setHelpText(cItem.getHelpText());
+                groupItem.setHelpTitle(stripTags(cItem.getText()));
+                groupItem.setHelpLinkText("what\'s this?");
+            }
+
+            groupItem.setInputValue(cItem.getId());
+            groupItem.setName(customization.getCustomizationId());
+
+            items.add(groupItem);
+
+            group.setCheckboxItems(items);
+
+        }
+
+        //add field
+        getField().setOptions(b, group, firstFieldSetItem);
+    }
+
+    public GenericGroupField getField()
+    {
+        return new CheckBoxGroupField();
+    }
+
+}

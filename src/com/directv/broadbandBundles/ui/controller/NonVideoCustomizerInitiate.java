@@ -1,0 +1,53 @@
+package com.directv.broadbandBundles.ui.controller;
+
+import com.directv.broadbandBundles.customization.controller.NonVideoCustomizerPunchIn;
+import com.directv.broadbandBundles.ui.model.input.CustomizationModel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 5/6/11
+ * Time: 10:03 AM
+ * Feeds the UI a Customization Model
+ */
+public class NonVideoCustomizerInitiate extends HttpServlet
+{
+    private final Log logger = LogFactory.getLog(getClass());
+
+    public void service(HttpServletRequest request,
+                        HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        try
+        {
+            //input to UI builder
+            CustomizationModel model = (CustomizationModel) request.getSession(false).getAttribute(NonVideoCustomizerPunchIn.CUSTOMIZATION_PARAM_NAME);
+
+            logger.debug("getPunchOutURL <" + model.getPunchOutURL() + "> ");
+            logger.debug("vistID <" + model.getVisitId() + "> ");
+
+            NonVideoCustomizerRender.renderGetUI(model, request, response);
+        }
+        catch (Exception e)
+        {
+            logger.fatal("Failed to render Customizations: ", e);
+            StackTraceElement[] steArray = e.getStackTrace();
+            if (steArray != null)
+            {
+                for (StackTraceElement ste : steArray)
+                {
+                    logger.fatal("at " + ste.toString());
+                }
+            }
+        }
+    }
+
+}

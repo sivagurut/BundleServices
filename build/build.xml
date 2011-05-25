@@ -1,0 +1,132 @@
+<project name="BundlesNVC" default="all" basedir=".">
+
+	<echo>+------------------------------------------------------------+</echo>
+	<echo>+           Intailization of variables.                      +</echo>
+	<echo>+------------------------------------------------------------+</echo>
+
+
+	<property name="base_dir" value=".." />
+	<property name="home_dir" value="../.." />
+	<property name="release_dir" location="${home_dir}/Release" />
+	<property name="project.webinf" value="${base_dir}/web/WEB-INF" />
+	<property name="project.lib" value="${project.webinf}/lib" />
+	<property name="source_base_dir" value="${base_dir}/src" />
+
+	<!-- Set build class path -->
+	<target name="setclasspath">
+
+		<path id="project.classpath">
+			<fileset dir="${project.lib}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<path id="project.fullclasspath">
+			<path refid="project.classpath" />
+		</path>
+
+	</target>
+
+	<target name="build-project">
+
+		<echo>+------------------------------------------------------------+</echo>
+		<echo>+           Compilation and War creation                     +</echo>
+		<echo>+------------------------------------------------------------+</echo>
+
+		<property name="projectclasspath" refid="project.fullclasspath" />
+		<echo message="Classpath = ${projectclasspath}" />
+
+		<delete dir="${release_dir}/BundlesNVC" />
+		<delete dir="${release_dir}/BundlesNVC_WAR" />
+
+		<mkdir dir="${release_dir}/BundlesNVC" />
+		<mkdir dir="${release_dir}/BundlesNVC_WAR" />
+		<mkdir dir="${release_dir}/BundlesNVC/WEB-INF" />
+		<mkdir dir="${release_dir}/BundlesNVC/META-INF" />
+		<mkdir dir="${release_dir}/BundlesNVC/WEB-INF/classes" />
+
+		<javac srcdir="${source_base_dir}" destdir="${release_dir}/BundlesNVC/WEB-INF/classes" includes="com/**" debug="true">
+			<classpath refid="project.fullclasspath" />
+		</javac>
+
+		<copy todir="${release_dir}/BundlesNVC/WEB-INF/lib">
+			<fileset dir="${project.lib}">
+				<include name="**/*.jar" />
+				<exclude name="**/servlet-api.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release_dir}/BundlesNVC/WEB-INF/classes">
+			<fileset dir="${source_base_dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+				<include name="**/*.json" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release_dir}/BundlesNVC/">
+			<fileset dir="${base_dir}/web">
+				<include name="**/*.html" />
+				<include name="**/*.jsp" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release_dir}/BundlesNVC/WEB-INF">
+			<fileset dir="${base_dir}/web/WEB-INF">
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.properties" />
+				<include name="**/*.tld" />
+			</fileset>
+		</copy>
+
+		<delete dir="${release_dir}/BundlesNVC/src" />
+
+		<copy todir="${release_dir}/BundlesNVC/css">
+			<fileset dir="${base_dir}/web/css">
+				<include name="**/*.css" />
+				<include name="**/*.jpg" />
+				<include name="**/*.png" />
+				<include name="**/*.gif" />
+				<include name="**/*.jpeg" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release_dir}/BundlesNVC/js">
+			<fileset dir="${base_dir}/web/js">
+				<include name="**/*.js" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release_dir}/BundlesNVC/formjs">
+			<fileset dir="${base_dir}/web/formjs">
+				<include name="**/*.js" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${release_dir}/BundlesNVC/ext-3.2.1">
+			<fileset dir="${base_dir}/web/ext-3.2.1">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release_dir}/BundlesNVC/META-INF">
+			<fileset dir="${base_dir}/web/META-INF">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<jar jarfile="${release_dir}/BundlesNVC_WAR/BundlesNVC.war" basedir="${release_dir}/BundlesNVC">
+			<manifest>
+				<attribute name="Specification-Title" value="BundlesNVC" />
+			</manifest>
+		</jar>
+
+	</target>
+
+	<target name="all">
+		<antcall target="setclasspath" />
+		<antcall target="build-project" />
+	</target>
+
+</project>

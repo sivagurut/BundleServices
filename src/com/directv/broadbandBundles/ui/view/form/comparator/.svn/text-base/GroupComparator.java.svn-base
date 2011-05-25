@@ -1,0 +1,21 @@
+package com.directv.broadbandBundles.ui.view.form.comparator;
+
+import com.directv.broadbandBundles.ui.model.input.CustomizationGroup;
+
+import java.util.Comparator;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 00U3073
+ * Date: 4/26/11
+ * Time: 1:26 PM
+ * Sorts the Customization Groups by Rank
+ */
+public class GroupComparator implements Comparator<CustomizationGroup>
+{
+    public int compare(CustomizationGroup first, CustomizationGroup second)
+    {
+        //the lower the rank number the first one displayed
+        return (first.getRank() < second.getRank() ? -1 : (first.getRank() == second.getRank() ? 0 : 1));
+    }
+}

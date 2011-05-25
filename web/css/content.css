@@ -1,0 +1,108 @@
+/**Form style css starts**/
+
+.blueCls{
+	color:blue;
+}
+.itemCls{
+	margin-right:10px;
+	float:right;
+	*position:absolute;
+	*right:15px;
+	color:blue;
+	}
+.redCls{
+	color:red;
+}
+.displayNone{
+	display:none;
+}
+.errorMsgCls{
+	display:none;
+	color:"red";
+	width:100%;
+	text-align:center;
+}
+
+/**Form style css ends**/
+
+table.tableNoBorder {
+	font-size: 11px;
+	font-family: Calibri;
+	color: #666600;
+}
+
+table.tableNoBorder th {
+	background-color: #D8D8D8;
+	font-size: 11px;
+	font-family: Tahoma;
+	color: black;
+	width: auto;
+	height: 30px;
+	padding: 5px 0;
+	padding-left: 8px;
+	padding-right: 8px;
+	text-decoration: none;
+}
+
+table.tableNoBorder td {
+	font-size: 11px;
+	font-family: Tahoma;
+	color: black;
+	display: block;
+	width: auto;
+	padding: 5px 0;
+	padding-left: 8px;
+	padding-right: 8px;
+	text-decoration: none;
+}
+
+#common_messages {
+	max-width: 1000px;
+	max-height: 100px;
+	overflow: auto;
+	position: relative;
+	padding-top: 8px;
+	padding-bottom: 0px;
+	padding-left: 12px;
+}
+
+#common_messages ul {
+	list-style-type: disc;
+	list-style-position: inside;
+	margin: 0px;
+	padding: 0px;
+}
+
+#common_messages li {
+	margin: 0px;
+	padding: 0px;
+}
+
+#rangeDemoStart {
+	background-image: url("images/calendar.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+#separator {
+	min-width:5px;
+}
+#helpDiv {
+	margin-top:10px;
+	}
+#instructionText{
+	margin-top:8px;
+	margin-bottom:5px;
+	}
+.error {
+	color: #ff0000;
+	overflow:auto;
+}
+
+.errorblock {
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}
