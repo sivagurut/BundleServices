@@ -5,7 +5,7 @@ var visitId = 0;
 var fieldSetArray = new Array();
 // Immediate submit Flag to bypass client side validations
 var immediateFlag;
-
+//Testing purpose
 $(window).load(function() {
 	// Render form elements
 		callAjax(xmlCustomizationInput, fieldSetArray);
